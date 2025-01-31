@@ -1,0 +1,53 @@
+<html>
+  <head> </head>
+  <style>
+    .buttons {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .task {
+      border-radius: 8px;
+      padding: 8px 6px;
+      border: 1px solid #ccc;
+    }
+
+    .task + .task {
+      margin-top: 12px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+    }
+
+    .status {
+      font-size: 0.8em;
+      color: #c2bcbc;
+    }
+  </style>
+  <body class="content">
+    <div class="buttons">
+      <button id="regenate">Regenerar listado</button>
+      <button id="add-first">Añadir al principio</button>
+      <button id="add-last">Añadir al final</button>
+    </div>
+    <div id="tasks">
+      <div class="task">
+        <span class="completed">Tarea random 1</span> -
+        <span class="status">completed</span>
+      </div>
+      <div class="task">
+        <span>Tarea random 2</span> -
+        <span class="status">pending</span>
+      </div>
+      <div class="task">
+        <span class="completed">Tarea random 3</span> -
+        <span class="status">completed</span>
+      </div>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>

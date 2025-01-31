@@ -49,10 +49,6 @@ function renderPerricoArray() {
   addSocialListeners();
 }
 
-// setInterval (() => {
-//   addPerrico();
-// }, 10000);
-
 // Añadimos la imagen
 const addPerrico = async (addToStart) => {
   const perricoImg = await getRandomDogImage();
