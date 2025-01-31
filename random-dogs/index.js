@@ -2,12 +2,12 @@ const perricosArray = ['https://images.dog.ceo/breeds/affenpinscher/n02110627_10
 console.log(perricosArray);
 
 const timeoutId = setTimeout(() => {
-    document.querySelector('#add-warning').style.display = '';
+  document.querySelector('#add-warning').style.display = '';
 }, 3000);
 
 function clearWarningMessage() {
-    clearTimeout(timeoutId);
-    document.querySelector('#add-warning').style.display = 'none';
+  clearTimeout(timeoutId);
+  document.querySelector('#add-warning').style.display = 'none';
 }
 
 // Funcion para sumar los likes y dislikes al span
@@ -32,16 +32,18 @@ function addSocialListeners() {
 
 // Añade los perros en el array con un nuevo html que incluye la imagen de la api
 function renderPerricoArray() {
-  const dogList = document.querySelector('#dog-list');
+
   dogList.innerHTML = '';
 
+  const gallery = document.querySelector('#dog-list')
+  
   perricosArray.forEach((dogImage, index) => {
-    const htmlAdd = `<div class="card">
-  <img src="${dogImage}" alt="Perro" />
-  <br />
-  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
-</div>`;
+    gallery.innerHTML = `<div class="card">
+    <img src="${dogImage}" alt="Perro" />
+    <br />
+    <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
+    <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
+    </div>`
 
     dogList.innerHTML += htmlAdd;
   });
@@ -64,17 +66,22 @@ const addPerrico = async (addToStart) => {
 
   const isAnyFilterSelected = document.querySelector('.filter-selected');
 
-  const htmlAdd = `<div class="card" ${isAnyFilterSelected ? 'style="display:none"' : ''}>
-  <img src="${perricoImg}" alt="Perro" />
-  <br />
-  <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-  <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
-  </div>`;
+  const card = document.createElement("div")
+  card.classList.add("card"); 
+  card.style = isAnyFilterSelected ? 'display:none' : '';
+  card.innerHTML = `
+    <img src="${perricoImg}" alt="Perro" />
+    <br />
+    <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
+    <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
+    `
 
   if (addToStart) {
-    dogList.innerHTML = htmlAdd + dogList.innerHTML;
+    //dogList.innerHTML = htmlAdd + dogList.innerHTML;
+    dogList.prepend(card);
   } else {
-    dogList.innerHTML = dogList.innerHTML + htmlAdd;
+    //dogList.innerHTML = dogList.innerHTML + htmlAdd;
+    dogList.append(card);
   }
   addSocialListeners();
 };
