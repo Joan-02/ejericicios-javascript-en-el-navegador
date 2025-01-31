@@ -1,6 +1,14 @@
 const perricosArray = ['https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg'];
 console.log(perricosArray);
 
+const timeoutId = setTimeout(() => {
+    document.querySelector('#add-warning').style.display = '';
+}, 3000);
+
+function clearWarningMessage() {
+    clearTimeout(timeoutId);
+    document.querySelector('#add-warning').style.display = 'none';
+}
 
 // Funcion para sumar los likes y dislikes al span
 function addSocialListeners() {
@@ -21,8 +29,6 @@ function addSocialListeners() {
     });
   });
 }
-
-
 
 // Añade los perros en el array con un nuevo html que incluye la imagen de la api
 function renderPerricoArray() {
@@ -46,12 +52,6 @@ function renderPerricoArray() {
 // setInterval (() => {
 //   addPerrico();
 // }, 10000);
-
-const timeOutId = setTimeout (() => {
-  alert("Pulsa algún botón para añadir perricos");
-}, 1000);
-
-
 
 // Añadimos la imagen
 const addPerrico = async (addToStart) => {
@@ -84,24 +84,25 @@ const addPerrico = async (addToStart) => {
 };
 
 document.querySelector('#add-1-perrico').addEventListener('click', function () {
-  const isFilterSelected = document.querySelector('#like-filter').classList.contains('filter-selected');
-  if (isFilterSelected) {
-    alert('no se puede bro');
-    return;
-  }
-  addPerrico();
+    clearWarningMessage();
+
+    addPerrico();
 });
 
 document.querySelector('#add-1-perrico-start').addEventListener('click', function () {
-  addPerrico(true);
+    clearWarningMessage();
+
+    addPerrico(true);
 });
 
 document.querySelector('#add-5-perricos').addEventListener('click', function () {
-  addPerrico();
-  addPerrico();
-  addPerrico();
-  addPerrico();
-  addPerrico();
+    clearWarningMessage();
+
+    addPerrico();
+    addPerrico();
+    addPerrico();   
+    addPerrico();
+    addPerrico();
 });
 
 const likeFilterButton = document.querySelector('#like-filter');
@@ -155,3 +156,13 @@ document.querySelector('#dislike-filter').addEventListener('click', function () 
 });
 
 renderPerricoArray();
+
+let automaticPerrosCount = 0;
+const intervalId = setInterval(() => {
+  addPerrico();
+  automaticPerrosCount++;
+
+  if (automaticPerrosCount === 2) {
+    clearInterval(intervalId);
+  }
+}, 1000);
