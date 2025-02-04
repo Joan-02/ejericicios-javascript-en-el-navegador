@@ -7,7 +7,8 @@ function getRandomInt(min, max) {
 function generateRandomTask() {
   return {
     text: `Texto aleatorio número ${getRandomInt(1, 1000)}`,
-    isCompleted: getRandomInt(0, 1) === 1
+    isCompleted: getRandomInt(0, 1) === 1,
+    isFav: getRandomInt(0, 1) === 1
   };
 }
 
@@ -19,7 +20,6 @@ function getRandomArray() {
   return randomTasks;
 }
 
-// Estas funciones serán las que iremos cambiando con los ejemplos
 function regenerateArray() {
   const tasks = getRandomArray();
   document.querySelector('#tasks').innerHTML = '';
@@ -35,7 +35,8 @@ function createTaskNode(task, addToEnd) {
 
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
-    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>`;
+    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
+    <button class="${task.isFav ? 'fav' : ''}" style="display:none"> ${task.isFav ? '💝' : '💔'} </button>`;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -48,6 +49,22 @@ function createTaskNode(task, addToEnd) {
   taskNode.addEventListener('click', function () {
     console.log('hola', task.text);
   });
+
+  taskNode.addEventListener('click', function () {
+    const taskTextNode = taskNode.querySelector('span');
+    const isCurrentlyCompleted = taskTextNode.classList.contains('completed');
+    taskTextNode.classList.toggle('completed');
+    taskNode.querySelector('.status').innerText = isCurrentlyCompleted ? 'pending' : 'completed';
+  });
+
+  taskNode.querySelector('button').addEventListener('click', () => {
+    const taskIcon = taskNode.querySelector('button');
+    const isCurrentlyCompleted = taskIcon.classList.contains('.fav');
+    taskIcon.classList.toggle('.fav');
+    taskNode.querySelector('.fav').innerText = isCurrentlyCompleted ? '💔' : '💝';
+  });
+
+  
 }
 
 function addTask(addToEnd) {
@@ -67,3 +84,4 @@ document.querySelector('#add-first').addEventListener('click', () => {
 document.querySelector('#add-last').addEventListener('click', () => {
   addTask(true);
 });
+

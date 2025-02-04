@@ -81,7 +81,7 @@ const addPerrico = async (addToStart) => {
     dogList.prepend(card);
   } else {
     //dogList.innerHTML = dogList.innerHTML + htmlAdd;
-    dogList.append(card);
+    dogList.appendChild(card);
   }
   addSocialListeners();
 };
