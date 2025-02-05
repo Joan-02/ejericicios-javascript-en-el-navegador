@@ -50,14 +50,16 @@ function createTaskNode(task, addToEnd) {
     console.log('hola', task.text);
   });
 
-  taskNode.addEventListener('click', function () {
+  taskNode.addEventListener('click', function (event) {
+    event.stopPropagation();
     const taskTextNode = taskNode.querySelector('span');
     const isCurrentlyCompleted = taskTextNode.classList.contains('completed');
     taskTextNode.classList.toggle('completed');
     taskNode.querySelector('.status').innerText = isCurrentlyCompleted ? 'pending' : 'completed';
   });
 
-  taskNode.querySelector('button').addEventListener('click', () => {
+  taskNode.querySelector('button').addEventListener('click', (event) => {
+    event.stopPropagation();
     const taskIcon = taskNode.querySelector('.fav.icon');
     const isCurrentlyCompleted = taskIcon.classList.contains('fav');
     taskIcon.classList.toggle('fav');
