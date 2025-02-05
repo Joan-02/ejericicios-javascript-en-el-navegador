@@ -36,7 +36,7 @@ function createTaskNode(task, addToEnd) {
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
     <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
-    <button class="${task.isFav ? 'fav' : ''}" style="display:none"> ${task.isFav ? '💝' : '💔'} </button>`;
+    <button class="fav-icon ${task.isFav ? 'fav' : ''}" style="display:none"> ${task.isFav ? '💝' : '💔'} </button>`;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -58,19 +58,29 @@ function createTaskNode(task, addToEnd) {
   });
 
   taskNode.querySelector('button').addEventListener('click', () => {
-    const taskIcon = taskNode.querySelector('button');
-    const isCurrentlyCompleted = taskIcon.classList.contains('.fav');
-    taskIcon.classList.toggle('.fav');
+    const taskIcon = taskNode.querySelector('.fav.icon');
+    const isCurrentlyCompleted = taskIcon.classList.contains('fav');
+    taskIcon.classList.toggle('fav');
     taskNode.querySelector('.fav').innerText = isCurrentlyCompleted ? '💔' : '💝';
   });
 
-  
-}
+  taskNode.addEventListener('mouseover', () => {
+    console.log("El cursor ha entrado en el elemento");
+    const taskIcon = taskNode.querySelector('button');  
+    taskIcon.style.display = 'inline';
+  })  
+
+  taskNode.addEventListener('mouseout', () => {
+    console.log("El cursor ha salido del elemento");
+    const taskIcon = taskNode.querySelector('button');  
+    taskIcon.style.display = 'none';
+  }); 
+};
 
 function addTask(addToEnd) {
   const task = generateRandomTask();
   createTaskNode(task, addToEnd);
-}
+};
 
 // event listeners para que los botones llamen a las funciones anteriores
 document.querySelector('#regenate').addEventListener('click', () => {
