@@ -66,17 +66,22 @@ function createTaskNode(task, addToEnd) {
     taskNode.querySelector('.fav').innerText = isCurrentlyCompleted ? '💔' : '💝';
   });
 
+  const taskIcon = taskNode.querySelector('button');  
+
   taskNode.addEventListener('mouseover', () => {
     console.log("El cursor ha entrado en el elemento");
-    const taskIcon = taskNode.querySelector('button');  
     taskIcon.style.display = 'inline';
   })  
 
   taskNode.addEventListener('mouseout', () => {
     console.log("El cursor ha salido del elemento");
-    const taskIcon = taskNode.querySelector('button');  
     taskIcon.style.display = 'none';
   }); 
+
+
+  document.querySelector('#create-task').addEventListener("submit", (event) => {
+
+  });
 };
 
 function addTask(addToEnd) {
@@ -97,3 +102,16 @@ document.querySelector('#add-last').addEventListener('click', () => {
   addTask(true);
 });
 
+document.querySelector('#create-task').addEventListener('submit', function (event) {
+  console.log(event);
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const taskText = formData.get('taskText');
+  const task = {
+    text: taskText,
+    isFav: false,
+    isCompleted: false
+  }
+  createTaskNode(task, false);
+});

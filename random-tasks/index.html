@@ -27,8 +27,13 @@
       font-size: 0.8em;
       color: #c2bcbc;
     }
+
   </style>
   <body class="content">
+    <form id="create-task">
+      <input type="text" placeholder="Escribe tu tarea" name="taskText" />
+      <button disabled>Crear tarea</button>
+    </form>
     <div class="buttons">
       <button id="regenate">Regenerar listado</button>
       <button id="add-first">Añadir al principio</button>
@@ -46,7 +51,7 @@
       <div class="task">
         <span class="completed">Tarea random 3</span> -
         <span class="status">completed</span>
-      </div>
+      </div>       
     </div>
   </body>
   <script src="./index.js"></script>
