@@ -15,6 +15,14 @@
       border: 1px solid #ccc;
     }
 
+    .fav-button {
+      display: none;
+    }
+
+    .task:hover .fav-button {
+      display: inline-block;
+    }
+
     .task + .task {
       margin-top: 12px;
     }
@@ -27,7 +35,6 @@
       font-size: 0.8em;
       color: #c2bcbc;
     }
-
   </style>
   <body class="content">
     <form id="create-task">
@@ -35,24 +42,11 @@
       <button disabled>Crear tarea</button>
     </form>
     <div class="buttons">
-      <button id="regenate">Regenerar listado</button>
+      <button id="regenate">Regenerarlistado</button>
       <button id="add-first">Añadir al principio</button>
       <button id="add-last">Añadir al final</button>
     </div>
-    <div id="tasks">
-      <div class="task">
-        <span class="completed">Tarea random 1</span> -
-        <span class="status">completed</span>
-      </div>
-      <div class="task">
-        <span>Tarea random 2</span> -
-        <span class="status">pending</span>
-      </div>
-      <div class="task">
-        <span class="completed">Tarea random 3</span> -
-        <span class="status">completed</span>
-      </div>       
-    </div>
+    <div id="tasks"></div>
   </body>
   <script src="./index.js"></script>
 </html>

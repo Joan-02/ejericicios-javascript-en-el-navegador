@@ -36,7 +36,8 @@ function createTaskNode(task, addToEnd) {
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
     <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
-    <button class="fav-icon ${task.isFav ? 'fav' : ''}" style="display:none"> ${task.isFav ? '💝' : '💔'} </button>`;
+    <button class="fav-button ${task.isFav ? 'fav' : ''}">${task.isFav ? '💝' : '💔'}</button>
+    `;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -47,47 +48,28 @@ function createTaskNode(task, addToEnd) {
   }
 
   taskNode.addEventListener('click', function () {
-    console.log('hola', task.text);
-  });
-
-  taskNode.addEventListener('click', function (event) {
-    event.stopPropagation();
+    console.log('contenedor tarea');
     const taskTextNode = taskNode.querySelector('span');
     const isCurrentlyCompleted = taskTextNode.classList.contains('completed');
     taskTextNode.classList.toggle('completed');
     taskNode.querySelector('.status').innerText = isCurrentlyCompleted ? 'pending' : 'completed';
   });
 
-  taskNode.querySelector('button').addEventListener('click', (event) => {
+  const favButtonNode = taskNode.querySelector('button');
+  favButtonNode.addEventListener('click', function (event) {
+    console.log('botón fav');
     event.stopPropagation();
-    const taskIcon = taskNode.querySelector('.fav.icon');
-    const isCurrentlyCompleted = taskIcon.classList.contains('fav');
-    taskIcon.classList.toggle('fav');
-    taskNode.querySelector('.fav').innerText = isCurrentlyCompleted ? '💔' : '💝';
+    const isCurrentlyFav = favButtonNode.classList.contains('fav');
+    favButtonNode.classList.toggle('fav');
+    favButtonNode.innerText = isCurrentlyFav ? '💔' : '💝';
   });
-
-  const taskIcon = taskNode.querySelector('button');  
-
-  taskNode.addEventListener('mouseover', () => {
-    console.log("El cursor ha entrado en el elemento");
-    taskIcon.style.display = 'inline';
-  })  
-
-  taskNode.addEventListener('mouseout', () => {
-    console.log("El cursor ha salido del elemento");
-    taskIcon.style.display = 'none';
-  }); 
-
-
-  document.querySelector('#create-task').addEventListener("submit", (event) => {
-
-  });
-};
+}
 
 function addTask(addToEnd) {
   const task = generateRandomTask();
+  console.log(task, addToEnd);
   createTaskNode(task, addToEnd);
-};
+}
 
 // event listeners para que los botones llamen a las funciones anteriores
 document.querySelector('#regenate').addEventListener('click', () => {
@@ -102,16 +84,36 @@ document.querySelector('#add-last').addEventListener('click', () => {
   addTask(true);
 });
 
+const formButton = document.querySelector('#create-task button');
 document.querySelector('#create-task').addEventListener('submit', function (event) {
   console.log(event);
   event.preventDefault();
 
+  // se utiliza para extraer los datos del formulario
   const formData = new FormData(event.target);
   const taskText = formData.get('taskText');
+  //
   const task = {
     text: taskText,
     isFav: false,
-    isCompleted: false
-  }
+    isCompleted: false,
+    id: Date.now()
+  };
   createTaskNode(task, false);
+  
+  let tasks = [{task}];
+  let tasksToString = JSON.stringify(tasks);
+  localStorage.setItem('tasksArray', tasksToString);
+
+  
+
+  event.target.reset();
+  formButton.disabled = true;
+});
+
+// activar o desactivar el boton si el input tiene texto
+const taskTextNode = document.querySelector('[name=taskText]');
+taskTextNode.addEventListener('input', function (event) {
+  console.log(event.target.value);
+  formButton.disabled = event.target.value === '';
 });
