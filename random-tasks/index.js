@@ -1,3 +1,10 @@
+function getLocalStorage () { // recuperar lo que he guardado
+  let tasks = JSON.parse(localStorage.getItem('tasksArray')); // esto es para pasar el string a objeto
+  tasks.forEach((task) => { // para ejecutar cada vez que haya un task creado la funcion createTaskNode
+    createTaskNode(task, true); // esto convierte el objeto en html, para que se guarde en el almacenamiento para siempre
+  });
+}
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -101,11 +108,18 @@ document.querySelector('#create-task').addEventListener('submit', function (even
   };
   createTaskNode(task, false);
   
-  let tasks = [{task}];
-  let tasksToString = JSON.stringify(tasks);
-  localStorage.setItem('tasksArray', tasksToString);
+  // let tasksArray = [];
+  // let tasksToString = JSON.stringify(tasksArray);
+  // localStorage.setItem('tasksArray', tasksToString);
 
-  
+  let tasksArrayToObject = JSON.parse(localStorage.getItem('tasksArray')) || [];
+  tasksArrayToObject.push(task);
+  let arrayWithTaskToString = JSON.stringify(tasksArrayToObject);
+  localStorage.setItem('tasksArray', arrayWithTaskToString);
+
+  // const tasksToString = JSON.stringify(task);
+  // localStorage.setItem('task', tasksToString);
+  // localStorage.getItem('task');
 
   event.target.reset();
   formButton.disabled = true;
@@ -117,3 +131,5 @@ taskTextNode.addEventListener('input', function (event) {
   console.log(event.target.value);
   formButton.disabled = event.target.value === '';
 });
+
+getLocalStorage ();
