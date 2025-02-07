@@ -38,14 +38,7 @@ function renderPerricoArray() {
   const gallery = document.querySelector('#dog-list')
   
   perricosArray.forEach((dogImage, index) => {
-    gallery.innerHTML = `<div class="card">
-    <img src="${dogImage}" alt="Perro" />
-    <br />
-    <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
-    <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>
-    </div>`
-
-    dogList.innerHTML += htmlAdd;
+    addPerrico(dogImage,false);
   });
 
   addSocialListeners();
