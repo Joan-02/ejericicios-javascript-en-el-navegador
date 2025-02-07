@@ -7,7 +7,8 @@ function getRandomInt(min, max) {
 function generateRandomTask() {
   return {
     text: `Texto aleatorio número ${getRandomInt(1, 1000)}`,
-    isCompleted: getRandomInt(0, 1) === 1
+    isCompleted: getRandomInt(0, 1) === 1,
+    isFav: getRandomInt(0, 1) === 1
   };
 }
 
@@ -19,7 +20,6 @@ function getRandomArray() {
   return randomTasks;
 }
 
-// Estas funciones serán las que iremos cambiando con los ejemplos
 function regenerateArray() {
   const tasks = getRandomArray();
   document.querySelector('#tasks').innerHTML = '';
@@ -35,7 +35,8 @@ function createTaskNode(task, addToEnd) {
 
   taskNode.innerHTML = `
     <span class="${task.isCompleted ? 'completed' : ''}">${task.text}</span> -
-    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>`;
+    <span class="status">${task.isCompleted ? 'completed' : 'pending'}</span>
+    <button class="fav-icon ${task.isFav ? 'fav' : ''}" style="display:none"> ${task.isFav ? '💝' : '💔'} </button>`;
 
   const tasksNode = document.querySelector('#tasks');
 
@@ -48,12 +49,45 @@ function createTaskNode(task, addToEnd) {
   taskNode.addEventListener('click', function () {
     console.log('hola', task.text);
   });
-}
+
+  taskNode.addEventListener('click', function (event) {
+    event.stopPropagation();
+    const taskTextNode = taskNode.querySelector('span');
+    const isCurrentlyCompleted = taskTextNode.classList.contains('completed');
+    taskTextNode.classList.toggle('completed');
+    taskNode.querySelector('.status').innerText = isCurrentlyCompleted ? 'pending' : 'completed';
+  });
+
+  taskNode.querySelector('button').addEventListener('click', (event) => {
+    event.stopPropagation();
+    const taskIcon = taskNode.querySelector('.fav.icon');
+    const isCurrentlyCompleted = taskIcon.classList.contains('fav');
+    taskIcon.classList.toggle('fav');
+    taskNode.querySelector('.fav').innerText = isCurrentlyCompleted ? '💔' : '💝';
+  });
+
+  const taskIcon = taskNode.querySelector('button');  
+
+  taskNode.addEventListener('mouseover', () => {
+    console.log("El cursor ha entrado en el elemento");
+    taskIcon.style.display = 'inline';
+  })  
+
+  taskNode.addEventListener('mouseout', () => {
+    console.log("El cursor ha salido del elemento");
+    taskIcon.style.display = 'none';
+  }); 
+
+
+  document.querySelector('#create-task').addEventListener("submit", (event) => {
+
+  });
+};
 
 function addTask(addToEnd) {
   const task = generateRandomTask();
   createTaskNode(task, addToEnd);
-}
+};
 
 // event listeners para que los botones llamen a las funciones anteriores
 document.querySelector('#regenate').addEventListener('click', () => {
@@ -66,4 +100,18 @@ document.querySelector('#add-first').addEventListener('click', () => {
 
 document.querySelector('#add-last').addEventListener('click', () => {
   addTask(true);
+});
+
+document.querySelector('#create-task').addEventListener('submit', function (event) {
+  console.log(event);
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const taskText = formData.get('taskText');
+  const task = {
+    text: taskText,
+    isFav: false,
+    isCompleted: false
+  }
+  createTaskNode(task, false);
 });
