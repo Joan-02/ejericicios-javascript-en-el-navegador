@@ -113,7 +113,7 @@ document.querySelector('#create-task').addEventListener('submit', function (even
   // localStorage.setItem('tasksArray', tasksToString);
 
   let tasksArrayToObject = JSON.parse(localStorage.getItem('tasksArray')) || [];
-  tasksArrayToObject.push(task);
+  tasksArrayToObject.unshift(task);
   let arrayWithTaskToString = JSON.stringify(tasksArrayToObject);
   localStorage.setItem('tasksArray', arrayWithTaskToString);
 
