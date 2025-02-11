@@ -79,17 +79,17 @@ function addTask(addToEnd) {
 }
 
 // event listeners para que los botones llamen a las funciones anteriores
-document.querySelector('#regenate').addEventListener('click', () => {
-  regenerateArray();
-});
+// document.querySelector('#regenate').addEventListener('click', () => {
+//   regenerateArray();
+// });
 
-document.querySelector('#add-first').addEventListener('click', () => {
-  addTask(false);
-});
+// document.querySelector('#add-first').addEventListener('click', () => {
+//   addTask(false);
+// });
 
-document.querySelector('#add-last').addEventListener('click', () => {
-  addTask(true);
-});
+// document.querySelector('#add-last').addEventListener('click', () => {
+//   addTask(true);
+// });
 
 const formButton = document.querySelector('#create-task button');
 document.querySelector('#create-task').addEventListener('submit', function (event) {
@@ -124,6 +124,10 @@ document.querySelector('#create-task').addEventListener('submit', function (even
   event.target.reset();
   formButton.disabled = true;
 });
+
+document.querySelector('#filter-fav').addEventListener('click', () => {
+  
+})
 
 // activar o desactivar el boton si el input tiene texto
 const taskTextNode = document.querySelector('[name=taskText]');
