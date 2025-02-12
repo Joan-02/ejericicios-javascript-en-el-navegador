@@ -1,5 +1,7 @@
 <html>
-  <head> </head>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
   <style>
     .buttons {
       display: flex;
@@ -35,6 +37,11 @@
       font-size: 0.8em;
       color: #c2bcbc;
     }
+
+    .button-selected {
+      background: blue;
+      color: white;
+    }
   </style>
   <body class="content">
     <form id="create-task">
@@ -42,10 +49,7 @@
       <button disabled>Crear tarea</button>
     </form>
     <div class="buttons">
-      <!-- <button id="regenate">Regenerarlistado</button>
-      <button id="add-first">Añadir al principio</button>
-      <button id="add-last">Añadir al final</button> -->
-      <button id="filter-fav">Filtrar favoritos</button>
+      <button id="completed-filter">Show completed</button>
     </div>
     <div id="tasks"></div>
   </body>
