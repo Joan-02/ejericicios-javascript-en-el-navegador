@@ -1,4 +1,4 @@
-const perricosArray = ['https://images.dog.ceo/breeds/affenpinscher/n02110627_10439.jpg'];
+const perricosArray = [];
 console.log(perricosArray);
 
 const timeoutId = setTimeout(() => {
@@ -50,10 +50,21 @@ function renderPerricoArray() {
   addSocialListeners();
 }
 
+const renderBreeds = async () => {
+  const allBreeds = await getAllBreeds(); //llamamos a la api
+  const select = document.querySelector('select'); 
+
+  for (let breed in allBreeds) {  //recorremos el objeto de la api con todas las razas
+    const option = document.createElement('option'); // creamos un option que es el elemento que va dentro del select
+    option.innerText = breed; // añadimos la raza al option, la raza se coge en el bucle for in
+    option.value = breed; // Establece el valor del option como el nombre de la raza
+    select.appendChild(option); // añadimos el elemento al select
+  }
+};
+
 const addPerrico = async (addToStart) => {
 
   document.querySelector('#add-1-perrico-start').disabled = true;
-  
   const breed = document.querySelector('select').value;
 
   const perricoImg = await getBreeds(breed);
@@ -174,6 +185,7 @@ document.querySelector('#dislike-filter').addEventListener('click', function () 
 });
 
 renderPerricoArray();
+renderBreeds();
 
 // let automaticPerrosCount = 0;
 // const intervalId = setInterval(() => {
