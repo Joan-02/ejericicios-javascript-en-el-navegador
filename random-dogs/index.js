@@ -1,4 +1,5 @@
 const perricosArray = [];
+let breedSelected = '';
 console.log(perricosArray);
 
 const timeoutId = setTimeout(() => {
@@ -52,21 +53,55 @@ function renderPerricoArray() {
 
 const renderBreeds = async () => {
   const allBreeds = await getAllBreeds(); //llamamos a la api
-  const select = document.querySelector('select'); 
+  const select = document.querySelector('#breeds'); 
+  const filter = document.querySelector('#filter-breed');
 
   for (let breed in allBreeds) {  //recorremos el objeto de la api con todas las razas
-    const option = document.createElement('option'); // creamos un option que es el elemento que va dentro del select
-    option.innerText = breed; // añadimos la raza al option, la raza se coge en el bucle for in
-    option.value = breed; // Establece el valor del option como el nombre de la raza
-    select.appendChild(option); // añadimos el elemento al select
+    const option1 = document.createElement('option');
+    option1.innerText = breed; // añadimos la raza al option, la raza se coge en el bucle for in
+    option1.value = breed; // Establece el valor del option como el nombre de la raza
+    select.appendChild(option1); // añadimos el elemento al select
+  }
+};
+
+function addBreedButton(breed) {
+  const buttonFilter = document.querySelector('#buttons-filter');
+  const buttons = buttonFilter.querySelectorAll('.breed-filter');
+  if(![...buttons].some(button => button.innerHTML === breed)) { 
+    const newButton = document.createElement('button');
+    newButton.className = 'breed-filter';
+    newButton.innerHTML = `${breed}`;
+    
+    buttonFilter.appendChild(newButton);
+    newButton.addEventListener('click', function () {
+      const allCards = document.querySelectorAll('.card');
+      const isActive = newButton.classList.contains('active');
+
+      // Remove 'active' class from all buttons
+      document.querySelectorAll('.breed-filter').forEach(btn => btn.classList.remove('active'));
+
+      if (isActive) {
+        // If the button is already active, show all cards again
+        allCards.forEach(card => card.style.display = 'inline-block');
+      } else {
+        // Set this button as active
+        newButton.classList.add('active');
+
+        // Filter the cards
+        allCards.forEach(card => {
+          const altAttribute = card.querySelector('img').alt;
+          card.style.display = (altAttribute === breed) ? 'inline-block' : 'none';
+        });
+      }
+    });    
   }
 };
 
 const addPerrico = async (addToStart) => {
 
   document.querySelector('#add-1-perrico-start').disabled = true;
-  const breed = document.querySelector('select').value;
-
+  const breed = document.querySelector('#breeds').value;
+  
   const perricoImg = await getBreeds(breed);
 
   if (addToStart) {
@@ -84,7 +119,7 @@ const addPerrico = async (addToStart) => {
   perricoCardElement.style.display = isAnyFilterSelected ? 'none' : '';
 
   perricoCardElement.innerHTML = `
-  <img src="${perricoImg}" alt="Perro" />
+  <img src="${perricoImg}" alt="${breed}" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
   <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>`;
@@ -94,6 +129,8 @@ const addPerrico = async (addToStart) => {
   } else {
     dogList.appendChild(perricoCardElement);
   }
+
+  addBreedButton(breed);
 
   const likeButton = perricoCardElement.querySelector('.like');
 
@@ -107,7 +144,6 @@ const addPerrico = async (addToStart) => {
     const likeCountNode = perricoCardElement.querySelector('.dislike-count');
     likeCountNode.innerText = Number(likeCountNode.innerText) + 1;
   });
-
   document.querySelector('#add-1-perrico-start').disabled = false;
 
 };
