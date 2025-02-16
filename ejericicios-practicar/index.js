@@ -1,6 +1,18 @@
 const formulario = document.querySelector('#task-form');
 const input = document.querySelector('#task-input');
 
+function getTasks() {
+    const tasksAsString = localStorage.getItem('task'); // Recupera el string almacenado
+  
+    if (!tasksAsString) { 
+      return []; // Si no hay tareas almacenadas, devuelve un array vacío
+    }
+  
+    return JSON.parse(tasksAsString); // Convierte el string JSON a un array de objetos y lo devuelve
+};
+
+getTasks ();
+
 formulario.addEventListener('submit', function(event) {
 
     event.preventDefault();
@@ -13,10 +25,7 @@ formulario.addEventListener('submit', function(event) {
         const task = document.createElement('li');
         const eliminateButton = document.createElement('button');
         eliminateButton.innerText = "Eliminar";
-        const editButton = document.createElement('button');
-        editButton.innerText = "Edit";
-
-
+        
         task.innerHTML = `${taskText}`;
 
         const tasksList = document.querySelector('#task-list');
@@ -27,18 +36,20 @@ formulario.addEventListener('submit', function(event) {
         })
 
         task.appendChild(eliminateButton); 
-        task.appendChild(editButton);
 
         eliminateButton.addEventListener('click', () => {
             task.remove();
         });
 
-        editButton.addEventListener('click', () => {
-            
-        });
-
+        const arrayTasks = getTasks();
+        arrayTasks.push(taskText);
+        localStorage.setItem('task', JSON.stringify(arrayTasks));
+        
         input.value = "";
     }
 });
+
+
+
 
 
