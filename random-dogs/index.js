@@ -70,9 +70,10 @@ function addBreedButton(breed) {
   if(![...buttons].some(button => button.innerHTML === breed)) { 
     const newButton = document.createElement('button');
     newButton.className = 'breed-filter';
-    newButton.innerHTML = `${breed}`;
+    newButton.innerHTML = breed;
     
     buttonFilter.appendChild(newButton);
+    
     newButton.addEventListener('click', function () {
       const allCards = document.querySelectorAll('.card');
       const isActive = newButton.classList.contains('active');
@@ -92,9 +93,9 @@ function addBreedButton(breed) {
           const altAttribute = card.querySelector('img').alt;
           card.style.display = (altAttribute === breed) ? 'inline-block' : 'none';
         });
-      }
+      };
     });    
-  }
+  };
 };
 
 const addPerrico = async (addToStart) => {
