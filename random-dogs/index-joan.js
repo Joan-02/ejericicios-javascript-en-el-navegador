@@ -132,7 +132,7 @@ const addPerrico = async (addToStart) => {
   perricoCardElement.style.display = isAnyFilterSelected ? 'none' : '';
 
   perricoCardElement.innerHTML = `
-  <img src="${perricoInfo.imgUrl}" alt="Perro" />
+  <img src="${perricoInfo.imgUrl}" alt="${breed}" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
   <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>`;

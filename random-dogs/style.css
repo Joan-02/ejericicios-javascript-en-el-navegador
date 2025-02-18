@@ -39,3 +39,9 @@ body {
     background: #3661d5;
     color: white;
   }
+
+  button.active {
+    background-color: blue;
+    color: white;
+  }
+  
