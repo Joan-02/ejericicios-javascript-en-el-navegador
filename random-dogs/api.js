@@ -24,7 +24,8 @@ async function getBreeds(breed) {
 
     const json = await response.json();
 
-    return json.message;
+    // TODO random breed
+    return { breed, imgUrl: json.message };
   } catch (error) {
     console.error(error.message);
   }

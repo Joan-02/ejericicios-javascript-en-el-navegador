@@ -1,6 +1,9 @@
 const perricosArray = [];
+
+//me guarda cuantos perros de cada raza hay
+const breedsCount = {};
+
 let breedSelected = '';
-console.log(perricosArray);
 
 const timeoutId = setTimeout(() => {
   document.querySelector('#add-warning').style.display = '';
@@ -64,52 +67,63 @@ const renderBreeds = async () => {
   }
 };
 
-function addBreedButton(breed) {
-  const buttonFilter = document.querySelector('#buttons-filter');
-  const buttons = buttonFilter.querySelectorAll('.breed-filter');
-  if(![...buttons].some(button => button.innerHTML === breed)) { 
-    const newButton = document.createElement('button');
-    newButton.className = 'breed-filter';
-    newButton.innerHTML = breed;
-    
-    buttonFilter.appendChild(newButton);
-    
-    newButton.addEventListener('click', function () {
-      const allCards = document.querySelectorAll('.card');
-      const isActive = newButton.classList.contains('active');
+// function addBreedButton(breed) {
+//   const buttonFilter = document.querySelector('#buttons-filter');
+//   const buttons = buttonFilter.querySelectorAll('.breed-filter');
+//   if(![...buttons].some(button => button.innerHTML === breed)) { 
+//     const newButton = document.createElement('button');
+//     newButton.className = 'breed-filter';
+//     newButton.innerHTML = `${breed}`;
+//     buttonFilter.appendChild(newButton);
 
-      // Remove 'active' class from all buttons
-      document.querySelectorAll('.breed-filter').forEach(btn => btn.classList.remove('active'));
+//     newButton.addEventListener('click', function () {
+//       const allCards = document.querySelectorAll('.card');
+//       const isActive = newButton.classList.contains('active');
 
-      if (isActive) {
-        // If the button is already active, show all cards again
-        allCards.forEach(card => card.style.display = 'inline-block');
-      } else {
-        // Set this button as active
-        newButton.classList.add('active');
+//       // Remove 'active' class from all buttons
+//       document.querySelectorAll('.breed-filter').forEach(btn => btn.classList.remove('active'));
 
-        // Filter the cards
-        allCards.forEach(card => {
-          const altAttribute = card.querySelector('img').alt;
-          card.style.display = (altAttribute === breed) ? 'inline-block' : 'none';
-        });
-      };
-    });    
-  };
+//       if (isActive) {
+//         // If the button is already active, show all cards again
+//         allCards.forEach(card => card.style.display = 'inline-block');
+//       } else {
+//         // Set this button as active
+//         newButton.classList.add('active');
+
+//         // Filter the cards
+//         allCards.forEach(card => {
+//           const altAttribute = card.querySelector('img').alt;
+//           card.style.display = (altAttribute === breed) ? 'inline-block' : 'none';
+//         });
+//       }
+//     });    
+//   }
+// };
+
+function updateBreedsFilter(breed) {
+
+  if (!breedsCount[breed]) {
+    breedsCount[bredd] = 1;
+    return;
+  }
+
+  breedCount[breed] += 1;
 };
 
 const addPerrico = async (addToStart) => {
 
   document.querySelector('#add-1-perrico-start').disabled = true;
   const breed = document.querySelector('#breeds').value;
+  const perricoInfo = await getBreeds(breed);
+  const perricoImg = perricoInfo.imgUrl;
   
-  const perricoImg = await getBreeds(breed);
-
   if (addToStart) {
-    perricosArray.unshift(perricoImg);
+    perricosArray.unshift(perricoInfo);
   } else {
-    perricosArray.push(perricoImg);
+    perricosArray.push(perricoInfo);
   }
+
+  console.log(perricosArray); 
 
   const dogList = document.querySelector('#dog-list');
 
