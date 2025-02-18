@@ -8,9 +8,6 @@ let breedSelected = '';
 const timeoutId = setTimeout(() => {
   document.querySelector('#add-warning').style.display = '';
 }, 3000);
-// console.log(getRandomDogImage());
-
-// addPerrico();
 
 function clearWarningMessage() {
   clearTimeout(timeoutId);
@@ -67,52 +64,53 @@ const renderBreeds = async () => {
   }
 };
 
-// function addBreedButton(breed) {
-//   const buttonFilter = document.querySelector('#buttons-filter');
-//   const buttons = buttonFilter.querySelectorAll('.breed-filter');
-//   if(![...buttons].some(button => button.innerHTML === breed)) { 
-//     const newButton = document.createElement('button');
-//     newButton.className = 'breed-filter';
-//     newButton.innerHTML = `${breed}`;
-//     buttonFilter.appendChild(newButton);
+function addBreedButton(breed) {
+  const buttonFilterNode = document.querySelector('.breed-filters');
 
-//     newButton.addEventListener('click', function () {
-//       const allCards = document.querySelectorAll('.card');
-//       const isActive = newButton.classList.contains('active');
+  // Buscar si ya existe un botón para la raza
+  let existingButton = buttonFilterNode.querySelector(`#${breed}-filter`);
 
-//       // Remove 'active' class from all buttons
-//       document.querySelectorAll('.breed-filter').forEach(btn => btn.classList.remove('active'));
+  if (!existingButton) {
+    // Si no existe, se crea uno nuevo
+    breedsCount[breed] = 1;
+    const newButton = document.createElement('button');
+    newButton.className = 'breed-filter';
+    newButton.id = `${breed}-filter`;
+    newButton.innerHTML = `${breed} (1)`;
 
-//       if (isActive) {
-//         // If the button is already active, show all cards again
-//         allCards.forEach(card => card.style.display = 'inline-block');
-//       } else {
-//         // Set this button as active
-//         newButton.classList.add('active');
+    buttonFilterNode.appendChild(newButton);
 
-//         // Filter the cards
-//         allCards.forEach(card => {
-//           const altAttribute = card.querySelector('img').alt;
-//           card.style.display = (altAttribute === breed) ? 'inline-block' : 'none';
-//         });
-//       }
-//     });    
-//   }
-// };
+    newButton.addEventListener('click', function () {
+      const allCards = document.querySelectorAll('.card');
+      const isActive = newButton.classList.contains('active');
 
-function updateBreedsFilter(breed) {
+      // Elimina 'active' de todos los botones
+      document.querySelectorAll('.breed-filter').forEach(btn => btn.classList.remove('active'));
 
-  if (!breedsCount[breed]) {
-    breedsCount[bredd] = 1;
-    return;
+      if (isActive) {
+        // Si ya estaba activo, mostrar todas las tarjetas
+        allCards.forEach(card => card.style.display = 'inline-block');
+      } else {
+        // Activamos este botón
+        newButton.classList.add('active');
+
+        // Filtrar las tarjetas
+        allCards.forEach(card => {
+          const altAttribute = card.querySelector('img').alt;
+          card.style.display = (altAttribute === breed) ? 'inline-block' : 'none';
+        });
+      }
+    });
+
+  } else {
+    // Si el botón ya existe, solo actualizamos el contador
+    breedsCount[breed] += 1;
+    existingButton.innerHTML = `${breed} (${breedsCount[breed]})`;
   }
-
-  breedCount[breed] += 1;
-};
+}
 
 const addPerrico = async (addToStart) => {
 
-  document.querySelector('#add-1-perrico-start').disabled = true;
   const breed = document.querySelector('#breeds').value;
   const perricoInfo = await getBreeds(breed);
   const perricoImg = perricoInfo.imgUrl;
@@ -134,7 +132,7 @@ const addPerrico = async (addToStart) => {
   perricoCardElement.style.display = isAnyFilterSelected ? 'none' : '';
 
   perricoCardElement.innerHTML = `
-  <img src="${perricoImg}" alt="${breed}" />
+  <img src="${perricoInfo.imgUrl}" alt="Perro" />
   <br />
   <p><span class="like-count"></span>❤️ <span class="dislike-count"></span>🤮</p>
   <button class="like">Preciosísimo</button> <button class="dislike">Feísisimo</button>`;
@@ -238,12 +236,3 @@ document.querySelector('#dislike-filter').addEventListener('click', function () 
 renderPerricoArray();
 renderBreeds();
 
-// let automaticPerrosCount = 0;
-// const intervalId = setInterval(() => {
-//   addPerrico();
-//   automaticPerrosCount++;
-
-//   if (automaticPerrosCount === 2) {
-//     clearInterval(intervalId);
-//   }
-// }, 1000);
