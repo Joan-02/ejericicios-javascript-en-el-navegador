@@ -15,15 +15,22 @@ body {
     font-size: 30px;
     text-align: center;
     margin-bottom: 30px;
+    width: 200px;
 }
 
 
 .display-flex {
     display: flex;
+    width: 300px;
+    align-items: center;
 }
 
 .flex-direction-column {
     flex-direction: column;
+}
+
+.buttons {
+    width: auto;
 }
 
 button {
