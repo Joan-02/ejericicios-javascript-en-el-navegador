@@ -1,16 +1,23 @@
 const startButton = document.querySelector('#start-button');
 let intervalID;
+let initialValue = parseInt(counter.value);
 
 startButton.addEventListener('click', function () {
     console.log('start clicked');
-    const counter = document.querySelector('#counter');
+
+    if (!initialValue || isNaN(initialValue)) {
+        initialValue = parseInt(counter.value);
+    }
+    
     intervalID = setInterval(function() {
+        const counter = document.querySelector('#counter');
         let count = parseInt(counter.value); // Convertimos el texto a número
         count--; // Restamos 1
         counter.value = count;
 
-        if (count === 0) {
+        if (count <= 0) {
             clearInterval(intervalID);
+            alert("¡Tiempo agotado! ⏳");
             return;
         }
     }, 1000); 
@@ -25,7 +32,8 @@ stopButton.addEventListener('click', function () {
 const resetButton = document.querySelector('#reset-button');
 
 resetButton.addEventListener('click', function () {
+    console.log('reset button');
     clearInterval(intervalID);
-    let count = parseInt(counter.innerText);
-    counter.innerText = count;
+    counter.value = initialValue;
+    console.log(initialValue);
 });

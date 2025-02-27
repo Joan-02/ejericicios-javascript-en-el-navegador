@@ -38,3 +38,7 @@ function operationNumbers () {
     console.log(operationResult);
     result.textContent = operationResult;
 }
+
+document.querySelector('.ac-button').addEventListener('click', function () {
+    result.textContent = '';
+});
