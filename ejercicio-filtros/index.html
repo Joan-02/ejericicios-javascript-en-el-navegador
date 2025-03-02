@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filtrar productos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Filtrar productos</h1>
+
+    <!-- Filtros -->
+    <div class="filtros">
+      <input type="text" id="filtroNombre" placeholder="Filtrar por nombre">
+      <select id="filtroCategoria">
+        <option value="">Todas las categorías</option>
+        <option value="electronica">Electrónica</option>
+        <option value="ropa">Ropa</option>
+        <option value="hogar">Hogar</option>
+      </select>
+    </div>
+
+    <!-- Lista de productos -->
+    <ul id="listaProductos">
+      <!-- Los productos se añadirán dinámicamente con JavaScript -->
+    </ul>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
