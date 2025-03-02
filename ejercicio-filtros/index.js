@@ -29,10 +29,10 @@ const products = [
       category: 'electronica',
       price: 600
     }
-  ];
+];
   
-  // Función para mostrar los productos en la lista
-  function mostrarProductos(products) {
+// Función para mostrar los productos en la lista
+function mostrarProductos(products) {
     const listaProductos = document.getElementById('listaProductos'); // Selecciona el contenedor
     listaProductos.innerHTML = ''; // Limpia la lista antes de mostrar los productos
   
@@ -45,28 +45,31 @@ const products = [
                       Precio: $${product.price}`;
       listaProductos.appendChild(li); // Añade el <li> a la lista
     });
-  }
+};
   
-  // Función para filtrar los productos por categoría
-  function filtrarPorCategoria() {
-    const filterSelect = document.querySelector('#filtroCategoria'); // Selecciona el select
-    const categoriaSeleccionada = filterSelect.value; // Obtiene el valor seleccionado
+// Función para filtrar los productos por categoría
+function filtrarPorCategoria() {
+    // Obtener los valores de los filtros
+    const textInput = document.querySelector('#filtroNombre').value.toLowerCase(); // Valor del input de búsqueda
+    const filterCategoria = document.querySelector('#filtroCategoria').value; // Valor del select de categoría
   
-    // Filtra el array de productos
+    // Filtrar el array de productos
     const productosFiltrados = products.filter((product) => {
-      if (categoriaSeleccionada === '') {
-        return true; // Incluir todos los productos
-      } else {
-        return product.category === categoriaSeleccionada; // Filtrar por categoría
-      }
+      const coincideNombre = product.name.toLowerCase().includes(textInput); // Verifica si el nombre del producto incluye el texto que el usuario ha escrito en el input de búsqueda (textInput).
+      const coincideCategoria = filterCategoria === '' || product.category === filterCategoria; // Coincide con la categoría
+      return coincideNombre && coincideCategoria; // Ambas condiciones deben cumplirse
     });
   
-    // Muestra los productos filtrados
+    // Mostrar los productos filtrados
     mostrarProductos(productosFiltrados);
-  }
+};
   
-  // Mostrar todos los productos al cargar la página
-  mostrarProductos(products);
+// Escuchar cambios en el input de búsqueda y en el select
+document.querySelector('#filtroNombre').addEventListener('input', filtrarPorCategoria);
+document.querySelector('#filtroCategoria').addEventListener('change', filtrarPorCategoria);
   
-  // Escuchar cambios en el select
-  document.querySelector('#filtroCategoria').addEventListener('change', filtrarPorCategoria);
+// Mostrar todos los productos al cargar la página
+mostrarProductos(products);
+   
+// Escuchar cambios en el select
+document.querySelector('#filtroCategoria').addEventListener('change', filtrarPorCategoria);
