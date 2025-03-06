@@ -1,0 +1,24 @@
+body {
+    text-align: center; /* Centra el texto y elementos inline */
+    font-family: Arial, sans-serif; /* Opcional: Añade una fuente */
+}
+  
+input, button {
+    margin: 5px 0; /* Espacio entre el input y el botón */
+    padding: 10px; /* Añade padding para mejor apariencia */
+    font-size: 16px; /* Tamaño de fuente */
+}
+  
+#resultados {
+    list-style: none; /* Elimina los puntos de la lista */
+    padding: 0;
+    margin-top: 20px; /* Espacio encima de la lista */
+}
+  
+#resultados li {
+    margin: 10px 0; /* Espacio entre elementos de la lista */
+    padding: 10px;
+    border: 1px solid #ccc; /* Borde para cada elemento */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center; /* Centra el texto dentro de los elementos */
+}
